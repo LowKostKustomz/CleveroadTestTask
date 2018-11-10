@@ -27,6 +27,7 @@ extension UsersList.Model {
         let name: String
         let phone: String
         let id: UsersList.UserIdentifier
+        let imageUrl: URL?
     }
 }
 

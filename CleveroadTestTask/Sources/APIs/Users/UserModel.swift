@@ -8,7 +8,7 @@ struct UserModel: Decodable {
     let picture: Picture
 
     var identifier: String {
-        return [self.id.name, self.id.value ?? ""].joined()
+        return [self.id.name, self.id.value ?? "", self.name.first, self.name.last, self.phone, self.email].joined()
     }
 }
 

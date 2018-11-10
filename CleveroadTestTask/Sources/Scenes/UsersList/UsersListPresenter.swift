@@ -33,7 +33,7 @@ extension UsersList {
 extension UsersList.Presenter: UsersList.PresentationLogic {
     func presentUsersDidChange(response: Event.UsersDidChange.Response) {
         let cells = response.users.map { (user) -> UsersListTableViewCell.Model in
-            return UsersListTableViewCell.Model(id: user.id, name: user.name, phoneNumber: user.phone, image: nil)
+            return user.cellModel
         }
         let viewModel = Event.UsersDidChange.ViewModel(cells: cells)
         self.presenterDispatch.display { (displayLogic) in
@@ -67,5 +67,16 @@ extension UsersList.Presenter: UsersList.PresentationLogic {
         self.presenterDispatch.display { (displayLogic) in
             displayLogic.displayDidSelectUser(viewModel: viewModel)
         }
+    }
+}
+
+private extension UsersList.Model.User {
+    var cellModel: UsersListTableViewCell.Model {
+        return UsersListTableViewCell.Model(
+            id: self.id,
+            name: self.name,
+            phoneNumber: self.phone,
+            imageUrl: self.imageUrl
+        )
     }
 }

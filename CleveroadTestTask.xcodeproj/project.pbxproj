@@ -33,6 +33,8 @@
 		E96D92FA2195E12300C5F298 /* UsersApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96D92F92195E12300C5F298 /* UsersApi.swift */; };
 		E96D92FC2195E14B00C5F298 /* Api.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96D92FB2195E14B00C5F298 /* Api.swift */; };
 		E96D92FE2195E3DF00C5F298 /* Codable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96D92FD2195E3DF00C5F298 /* Codable+Extensions.swift */; };
+		E96D930021972F5700C5F298 /* UIView+Loading.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96D92FF21972F5700C5F298 /* UIView+Loading.swift */; };
+		E96D930421973B6F00C5F298 /* UIFont+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96D930321973B6F00C5F298 /* UIFont+Theme.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,6 +68,8 @@
 		E96D92F92195E12300C5F298 /* UsersApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersApi.swift; sourceTree = "<group>"; };
 		E96D92FB2195E14B00C5F298 /* Api.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Api.swift; sourceTree = "<group>"; };
 		E96D92FD2195E3DF00C5F298 /* Codable+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Codable+Extensions.swift"; sourceTree = "<group>"; };
+		E96D92FF21972F5700C5F298 /* UIView+Loading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Loading.swift"; sourceTree = "<group>"; };
+		E96D930321973B6F00C5F298 /* UIFont+Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Theme.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -199,6 +203,8 @@
 			children = (
 				E96D92FD2195E3DF00C5F298 /* Codable+Extensions.swift */,
 				E96D92D62195D25A00C5F298 /* String+QueueLabel.swift */,
+				E96D930321973B6F00C5F298 /* UIFont+Theme.swift */,
+				E96D92FF21972F5700C5F298 /* UIView+Loading.swift */,
 				E96D92E22195D63B00C5F298 /* UIViewController+Nib.swift */,
 			);
 			path = Extensions;
@@ -360,6 +366,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E96D92D02195D1DC00C5F298 /* UsersListModels.swift in Sources */,
 				E96D92E52195D68600C5F298 /* UsersListTableViewCell.swift in Sources */,
 				E96D92D32195D1DC00C5F298 /* UsersListConfigurator.swift in Sources */,
 				E96D92DA2195D28800C5F298 /* UsersListUsersFetcherProtocol.swift in Sources */,
@@ -367,18 +374,19 @@
 				E96D92D72195D25B00C5F298 /* String+QueueLabel.swift in Sources */,
 				E95997112195CA45002EEAB6 /* AppDelegate.swift in Sources */,
 				E96D92F12195DE6300C5F298 /* TargetTypeModel.swift in Sources */,
+				E96D92F62195E0B300C5F298 /* UsersModel.swift in Sources */,
 				E96D92CE2195D1DC00C5F298 /* UsersListPresenter.swift in Sources */,
+				E96D930421973B6F00C5F298 /* UIFont+Theme.swift in Sources */,
 				E96D92DC2195D3B800C5F298 /* UsersListUsersFetcher.swift in Sources */,
 				E96D92D12195D1DC00C5F298 /* UsersListViewController.swift in Sources */,
 				E96D92EF2195DCAE00C5F298 /* UsersRequestBuilder.swift in Sources */,
-				E96D92F62195E0B300C5F298 /* UsersModel.swift in Sources */,
 				E96D92EB2195DA7900C5F298 /* UserModel.swift in Sources */,
 				E96D92F82195E0D400C5F298 /* APIErrorModel.swift in Sources */,
 				E96D92ED2195DB8500C5F298 /* NetworkAdapter.swift in Sources */,
 				E96D92D22195D1DC00C5F298 /* UsersListInteractor.swift in Sources */,
 				E96D92FC2195E14B00C5F298 /* Api.swift in Sources */,
+				E96D930021972F5700C5F298 /* UIView+Loading.swift in Sources */,
 				E96D92FA2195E12300C5F298 /* UsersApi.swift in Sources */,
-				E96D92D02195D1DC00C5F298 /* UsersListModels.swift in Sources */,
 				E96D92E12195D60D00C5F298 /* CellViewModelProtocol.swift in Sources */,
 				E96D92E32195D63B00C5F298 /* UIViewController+Nib.swift in Sources */,
 				E96D92FE2195E3DF00C5F298 /* Codable+Extensions.swift in Sources */,

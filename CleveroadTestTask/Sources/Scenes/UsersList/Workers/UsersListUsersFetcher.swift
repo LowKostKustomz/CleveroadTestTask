@@ -39,7 +39,13 @@ class UsersListUsersFetcher {
 
                     let users: Users = usersModel.results.map({ (model) -> User in
                         let name = [model.name.first, model.name.last].joined(separator: " ")
-                        return User(name: name, phone: model.phone, id: model.identifier)
+
+                        return User(
+                            name: name,
+                            phone: model.phone,
+                            id: model.identifier,
+                            imageUrl: URL(string: model.picture.thumbnail)
+                        )
                     })
                     completion(.success(users))
                 case .error(let error):
@@ -74,7 +80,7 @@ extension UsersListUsersFetcher: UsersListUsersFetcherProtocol {
 
         self.loadingStatusBehaviorRelay.accept(.loading)
         self.loadUsers(
-            page: 0,
+            page: 1,
             completion: { [weak self] (result) in
                 self?.loadingStatusBehaviorRelay.accept(.loaded)
                 switch result {
