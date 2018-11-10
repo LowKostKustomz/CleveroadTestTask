@@ -35,6 +35,10 @@
 		E96D92FE2195E3DF00C5F298 /* Codable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96D92FD2195E3DF00C5F298 /* Codable+Extensions.swift */; };
 		E96D930021972F5700C5F298 /* UIView+Loading.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96D92FF21972F5700C5F298 /* UIView+Loading.swift */; };
 		E96D930421973B6F00C5F298 /* UIFont+Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96D930321973B6F00C5F298 /* UIFont+Theme.swift */; };
+		E96D93072197478300C5F298 /* RootNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96D93062197478300C5F298 /* RootNavigationViewController.swift */; };
+		E96D93092197493800C5F298 /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96D93082197493800C5F298 /* AppController.swift */; };
+		E96D930B21974C1300C5F298 /* BaseFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96D930A21974C1300C5F298 /* BaseFlowController.swift */; };
+		E96D930D21974C3C00C5F298 /* UsersListFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96D930C21974C3C00C5F298 /* UsersListFlowController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -70,6 +74,10 @@
 		E96D92FD2195E3DF00C5F298 /* Codable+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Codable+Extensions.swift"; sourceTree = "<group>"; };
 		E96D92FF21972F5700C5F298 /* UIView+Loading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Loading.swift"; sourceTree = "<group>"; };
 		E96D930321973B6F00C5F298 /* UIFont+Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Theme.swift"; sourceTree = "<group>"; };
+		E96D93062197478300C5F298 /* RootNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootNavigationViewController.swift; sourceTree = "<group>"; };
+		E96D93082197493800C5F298 /* AppController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
+		E96D930A21974C1300C5F298 /* BaseFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseFlowController.swift; sourceTree = "<group>"; };
+		E96D930C21974C3C00C5F298 /* UsersListFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersListFlowController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,6 +178,8 @@
 		E96D92C62195D1A800C5F298 /* FlowControllers */ = {
 			isa = PBXGroup;
 			children = (
+				E96D930A21974C1300C5F298 /* BaseFlowController.swift */,
+				E96D930C21974C3C00C5F298 /* UsersListFlowController.swift */,
 			);
 			path = FlowControllers;
 			sourceTree = "<group>";
@@ -192,6 +202,7 @@
 		E96D92D42195D23D00C5F298 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				E96D93052197476F00C5F298 /* ViewControllers */,
 				E96D92D52195D24000C5F298 /* Extensions */,
 				E96D92DF2195D60C00C5F298 /* Protocols */,
 			);
@@ -238,6 +249,7 @@
 		E96D92E72195D9A100C5F298 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				E96D93082197493800C5F298 /* AppController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -272,6 +284,14 @@
 				E96D92F02195DE6300C5F298 /* TargetTypeModel.swift */,
 			);
 			path = Common;
+			sourceTree = "<group>";
+		};
+		E96D93052197476F00C5F298 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				E96D93062197478300C5F298 /* RootNavigationViewController.swift */,
+			);
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -367,6 +387,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E96D92D02195D1DC00C5F298 /* UsersListModels.swift in Sources */,
+				E96D930D21974C3C00C5F298 /* UsersListFlowController.swift in Sources */,
 				E96D92E52195D68600C5F298 /* UsersListTableViewCell.swift in Sources */,
 				E96D92D32195D1DC00C5F298 /* UsersListConfigurator.swift in Sources */,
 				E96D92DA2195D28800C5F298 /* UsersListUsersFetcherProtocol.swift in Sources */,
@@ -376,6 +397,7 @@
 				E96D92F12195DE6300C5F298 /* TargetTypeModel.swift in Sources */,
 				E96D92F62195E0B300C5F298 /* UsersModel.swift in Sources */,
 				E96D92CE2195D1DC00C5F298 /* UsersListPresenter.swift in Sources */,
+				E96D930B21974C1300C5F298 /* BaseFlowController.swift in Sources */,
 				E96D930421973B6F00C5F298 /* UIFont+Theme.swift in Sources */,
 				E96D92DC2195D3B800C5F298 /* UsersListUsersFetcher.swift in Sources */,
 				E96D92D12195D1DC00C5F298 /* UsersListViewController.swift in Sources */,
@@ -389,7 +411,9 @@
 				E96D92FA2195E12300C5F298 /* UsersApi.swift in Sources */,
 				E96D92E12195D60D00C5F298 /* CellViewModelProtocol.swift in Sources */,
 				E96D92E32195D63B00C5F298 /* UIViewController+Nib.swift in Sources */,
+				E96D93092197493800C5F298 /* AppController.swift in Sources */,
 				E96D92FE2195E3DF00C5F298 /* Codable+Extensions.swift in Sources */,
+				E96D93072197478300C5F298 /* RootNavigationViewController.swift in Sources */,
 				E96D92CF2195D1DC00C5F298 /* UsersListRouting.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
