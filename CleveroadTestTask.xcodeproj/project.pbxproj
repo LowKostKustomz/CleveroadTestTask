@@ -23,7 +23,7 @@
 		E96D92E12195D60D00C5F298 /* CellViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96D92E02195D60C00C5F298 /* CellViewModelProtocol.swift */; };
 		E96D92E32195D63B00C5F298 /* UIViewController+Nib.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96D92E22195D63B00C5F298 /* UIViewController+Nib.swift */; };
 		E96D92E52195D68600C5F298 /* UsersListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96D92E42195D68600C5F298 /* UsersListTableViewCell.swift */; };
-		E96D92EB2195DA7900C5F298 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96D92EA2195DA7900C5F298 /* UserModel.swift */; };
+		E96D92EB2195DA7900C5F298 /* UserApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96D92EA2195DA7900C5F298 /* UserApiModel.swift */; };
 		E96D92ED2195DB8500C5F298 /* NetworkAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96D92EC2195DB8500C5F298 /* NetworkAdapter.swift */; };
 		E96D92EF2195DCAE00C5F298 /* UsersRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96D92EE2195DCAE00C5F298 /* UsersRequestBuilder.swift */; };
 		E96D92F12195DE6300C5F298 /* TargetTypeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96D92F02195DE6300C5F298 /* TargetTypeModel.swift */; };
@@ -39,6 +39,11 @@
 		E96D93092197493800C5F298 /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96D93082197493800C5F298 /* AppController.swift */; };
 		E96D930B21974C1300C5F298 /* BaseFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96D930A21974C1300C5F298 /* BaseFlowController.swift */; };
 		E96D930D21974C3C00C5F298 /* UsersListFlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96D930C21974C3C00C5F298 /* UsersListFlowController.swift */; };
+		E96D930F2197598600C5F298 /* UsersListSavedUsersFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96D930E2197598600C5F298 /* UsersListSavedUsersFetcher.swift */; };
+		E96D9312219857FF00C5F298 /* RealmUsersStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96D9311219857FF00C5F298 /* RealmUsersStorage.swift */; };
+		E96D9314219858C800C5F298 /* UsersStorageProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96D9313219858C800C5F298 /* UsersStorageProtocol.swift */; };
+		E96D93162198593100C5F298 /* RealmUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96D93152198593100C5F298 /* RealmUserModel.swift */; };
+		E96D9319219861A500C5F298 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96D9318219861A500C5F298 /* UserModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,7 +67,7 @@
 		E96D92E02195D60C00C5F298 /* CellViewModelProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellViewModelProtocol.swift; sourceTree = "<group>"; };
 		E96D92E22195D63B00C5F298 /* UIViewController+Nib.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Nib.swift"; sourceTree = "<group>"; };
 		E96D92E42195D68600C5F298 /* UsersListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersListTableViewCell.swift; sourceTree = "<group>"; };
-		E96D92EA2195DA7900C5F298 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		E96D92EA2195DA7900C5F298 /* UserApiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserApiModel.swift; sourceTree = "<group>"; };
 		E96D92EC2195DB8500C5F298 /* NetworkAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkAdapter.swift; sourceTree = "<group>"; };
 		E96D92EE2195DCAE00C5F298 /* UsersRequestBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersRequestBuilder.swift; sourceTree = "<group>"; };
 		E96D92F02195DE6300C5F298 /* TargetTypeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetTypeModel.swift; sourceTree = "<group>"; };
@@ -78,6 +83,11 @@
 		E96D93082197493800C5F298 /* AppController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
 		E96D930A21974C1300C5F298 /* BaseFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseFlowController.swift; sourceTree = "<group>"; };
 		E96D930C21974C3C00C5F298 /* UsersListFlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersListFlowController.swift; sourceTree = "<group>"; };
+		E96D930E2197598600C5F298 /* UsersListSavedUsersFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersListSavedUsersFetcher.swift; sourceTree = "<group>"; };
+		E96D9311219857FF00C5F298 /* RealmUsersStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmUsersStorage.swift; sourceTree = "<group>"; };
+		E96D9313219858C800C5F298 /* UsersStorageProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersStorageProtocol.swift; sourceTree = "<group>"; };
+		E96D93152198593100C5F298 /* RealmUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmUserModel.swift; sourceTree = "<group>"; };
+		E96D9318219861A500C5F298 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -202,9 +212,10 @@
 		E96D92D42195D23D00C5F298 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				E96D93052197476F00C5F298 /* ViewControllers */,
 				E96D92D52195D24000C5F298 /* Extensions */,
+				E96D93172198619B00C5F298 /* Models */,
 				E96D92DF2195D60C00C5F298 /* Protocols */,
+				E96D93052197476F00C5F298 /* ViewControllers */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -224,8 +235,10 @@
 		E96D92D82195D27700C5F298 /* Workers */ = {
 			isa = PBXGroup;
 			children = (
+				E96D930E2197598600C5F298 /* UsersListSavedUsersFetcher.swift */,
 				E96D92DB2195D3B800C5F298 /* UsersListUsersFetcher.swift */,
 				E96D92D92195D28800C5F298 /* UsersListUsersFetcherProtocol.swift */,
+				E96D9310219857E100C5F298 /* UsersStorage */,
 			);
 			path = Workers;
 			sourceTree = "<group>";
@@ -266,7 +279,7 @@
 		E96D92E92195DA5F00C5F298 /* Users */ = {
 			isa = PBXGroup;
 			children = (
-				E96D92EA2195DA7900C5F298 /* UserModel.swift */,
+				E96D92EA2195DA7900C5F298 /* UserApiModel.swift */,
 				E96D92F92195E12300C5F298 /* UsersApi.swift */,
 				E96D92F52195E0B300C5F298 /* UsersModel.swift */,
 				E96D92EE2195DCAE00C5F298 /* UsersRequestBuilder.swift */,
@@ -292,6 +305,24 @@
 				E96D93062197478300C5F298 /* RootNavigationViewController.swift */,
 			);
 			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		E96D9310219857E100C5F298 /* UsersStorage */ = {
+			isa = PBXGroup;
+			children = (
+				E96D93152198593100C5F298 /* RealmUserModel.swift */,
+				E96D9311219857FF00C5F298 /* RealmUsersStorage.swift */,
+				E96D9313219858C800C5F298 /* UsersStorageProtocol.swift */,
+			);
+			path = UsersStorage;
+			sourceTree = "<group>";
+		};
+		E96D93172198619B00C5F298 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				E96D9318219861A500C5F298 /* UserModel.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -394,15 +425,20 @@
 				E96D92F42195DF4D00C5F298 /* RequestBuilder.swift in Sources */,
 				E96D92D72195D25B00C5F298 /* String+QueueLabel.swift in Sources */,
 				E95997112195CA45002EEAB6 /* AppDelegate.swift in Sources */,
+				E96D9319219861A500C5F298 /* UserModel.swift in Sources */,
 				E96D92F12195DE6300C5F298 /* TargetTypeModel.swift in Sources */,
 				E96D92F62195E0B300C5F298 /* UsersModel.swift in Sources */,
+				E96D930F2197598600C5F298 /* UsersListSavedUsersFetcher.swift in Sources */,
 				E96D92CE2195D1DC00C5F298 /* UsersListPresenter.swift in Sources */,
 				E96D930B21974C1300C5F298 /* BaseFlowController.swift in Sources */,
 				E96D930421973B6F00C5F298 /* UIFont+Theme.swift in Sources */,
+				E96D9314219858C800C5F298 /* UsersStorageProtocol.swift in Sources */,
 				E96D92DC2195D3B800C5F298 /* UsersListUsersFetcher.swift in Sources */,
+				E96D93162198593100C5F298 /* RealmUserModel.swift in Sources */,
 				E96D92D12195D1DC00C5F298 /* UsersListViewController.swift in Sources */,
+				E96D9312219857FF00C5F298 /* RealmUsersStorage.swift in Sources */,
 				E96D92EF2195DCAE00C5F298 /* UsersRequestBuilder.swift in Sources */,
-				E96D92EB2195DA7900C5F298 /* UserModel.swift in Sources */,
+				E96D92EB2195DA7900C5F298 /* UserApiModel.swift in Sources */,
 				E96D92F82195E0D400C5F298 /* APIErrorModel.swift in Sources */,
 				E96D92ED2195DB8500C5F298 /* NetworkAdapter.swift in Sources */,
 				E96D92D22195D1DC00C5F298 /* UsersListInteractor.swift in Sources */,

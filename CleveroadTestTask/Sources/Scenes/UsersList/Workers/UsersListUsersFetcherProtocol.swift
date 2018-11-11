@@ -22,6 +22,9 @@ protocol UsersListUsersFetcherProtocol {
     var loadingMoreStatus: LoadingStatus { get }
     var error: Error { get }
 
+    var canRefresh: Bool { get }
+    var canLoadMore: Bool { get }
+
     func observeUsers() -> Observable<Users>
     func observeLoadingStatus() -> Observable<LoadingStatus>
     func observeLoadingMoreStatus() -> Observable<LoadingStatus>

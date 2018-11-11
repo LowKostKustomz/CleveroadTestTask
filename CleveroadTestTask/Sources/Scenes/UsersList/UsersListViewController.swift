@@ -4,7 +4,8 @@ import RxSwift
 
 protocol UsersListDisplayLogic: class {
     typealias Event = UsersList.Event
-    
+
+    func displayViewDidLoadSync(viewModel: Event.ViewDidLoadSync.ViewModel)
     func displayUsersDidChange(viewModel: Event.UsersDidChange.ViewModel)
     func displayLoadingStatusDidChage(viewModel: Event.LoadingStatusDidChange.ViewModel)
     func displayLoadingMoreStatusDidChage(viewModel: Event.LoadingMoreStatusDidChange.ViewModel)
@@ -54,13 +55,16 @@ extension UsersList {
             self.interactorDispatch?.sendRequest { businessLogic in
                 businessLogic.onViewDidLoad(request: request)
             }
+
+            let requestSync = Event.ViewDidLoadSync.Request()
+            self.interactorDispatch?.sendSyncRequest(requestBlock: { (businessLogic) in
+                businessLogic.onViewDidLoadSync(request: requestSync)
+            })
         }
 
         // MARK: - Private methods
 
-        private func setupView() {
-            self.navigationItem.title = "Users"
-        }
+        private func setupView() { }
 
         private func setupRefreshControl() {
             self.refreshControl
@@ -88,9 +92,6 @@ extension UsersList {
 
         private func layoutViews() {
             self.view.addSubview(self.tableView)
-            self.tableView.refreshControl = self.refreshControl
-            self.tableView.tableFooterView = self.loadMoreActivityIndicator
-            self.tableView.tableFooterView?.isHidden = true
 
             self.tableView.snp.makeConstraints { (make) in
                 make.edges.equalToSuperview()
@@ -176,6 +177,19 @@ extension UsersList {
 }
 
 extension UsersList.ViewController: UsersList.DisplayLogic {
+    func displayViewDidLoadSync(viewModel: Event.ViewDidLoadSync.ViewModel) {
+        if viewModel.hasRefresh {
+            self.tableView.refreshControl = self.refreshControl
+        }
+
+        if viewModel.hasLoadMore {
+            self.tableView.tableFooterView = self.loadMoreActivityIndicator
+            self.tableView.tableFooterView?.isHidden = true
+        } else {
+            self.tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: 1, height: 0))
+        }
+    }
+
     func displayUsersDidChange(viewModel: Event.UsersDidChange.ViewModel) {
         self.sections = [viewModel.cells]
         self.tableView.reloadData()
