@@ -3,6 +3,7 @@ import Foundation
 protocol UsersListPresentationLogic {
     typealias Event = UsersList.Event
 
+    func presentViewDidLoadSync(response: Event.ViewDidLoadSync.Response)
     func presentUsersDidChange(response: Event.UsersDidChange.Response)
     func presentLoadingStatusDidChange(response: Event.LoadingStatusDidChange.Response)
     func presentLoadingMoreStatusDidChange(response: Event.LoadingMoreStatusDidChange.Response)
@@ -31,6 +32,13 @@ extension UsersList {
 }
 
 extension UsersList.Presenter: UsersList.PresentationLogic {
+    func presentViewDidLoadSync(response: Event.ViewDidLoadSync.Response) {
+        let viewModel = response
+        self.presenterDispatch.displaySync { (displayLogic) in
+            displayLogic.displayViewDidLoadSync(viewModel: viewModel)
+        }
+    }
+
     func presentUsersDidChange(response: Event.UsersDidChange.Response) {
         let cells = response.users.map { (user) -> UsersListTableViewCell.Model in
             return user.cellModel

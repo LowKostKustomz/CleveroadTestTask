@@ -42,6 +42,16 @@ extension UsersList.Event {
         struct Request { }
     }
 
+    enum ViewDidLoadSync {
+        struct Request { }
+        struct Response {
+            let hasRefresh: Bool
+            let hasLoadMore: Bool
+            let canRemoveUsers: Bool
+        }
+        typealias ViewModel = Response
+    }
+
     enum ReloadUsers {
         struct Request { }
     }
@@ -83,9 +93,15 @@ extension UsersList.Event {
 
     enum DidSelectUser {
         struct Request {
-            let id: String
+            let id: UsersList.UserIdentifier
         }
         typealias Response = Request
         typealias ViewModel = Request
+    }
+
+    enum DidRemoveUser {
+        struct Request {
+            let id: UsersList.UserIdentifier
+        }
     }
 }

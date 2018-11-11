@@ -11,6 +11,9 @@ class AppController {
             network: NetworkAdapter()
         )
     }()
+    private lazy var usersStorage: UsersStorageProtocol = {
+        return RealmUsersStorage()
+    }()
 
     init(
         rootController: RootNavigationProtocol
@@ -28,7 +31,8 @@ class AppController {
     private func runLaunchFlowController() {
         let usersListFlowController = UsersListFlowController(
             rootNavigation: self.rootController,
-            usersApi: self.usersApi
+            usersApi: self.usersApi,
+            usersStorage: self.usersStorage
         )
 
         usersListFlowController.run()

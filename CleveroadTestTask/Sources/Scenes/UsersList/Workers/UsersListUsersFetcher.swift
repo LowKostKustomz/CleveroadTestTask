@@ -8,7 +8,7 @@ class UsersListUsersFetcher {
     private var page: Int = 0
     private let resultsCount: Int = 10
 
-    private let usersBehaviorRelay: BehaviorRelay<Users> = BehaviorRelay(value: [])
+    private let usersBehaviorRelay: BehaviorRelay<[UserModel]> = BehaviorRelay(value: [])
     private let loadingStatusBehaviorRelay: BehaviorRelay<LoadingStatus> = BehaviorRelay(value: .loaded)
     private let loadingMoreStatusBehaviorRelay: BehaviorRelay<LoadingStatus> = BehaviorRelay(value: .loaded)
     private let errorBehaviorRelay: BehaviorRelay<UsersListUsersFetcherProtocol.Error> = BehaviorRelay(value: nil)
@@ -20,8 +20,14 @@ class UsersListUsersFetcher {
         self.usersApi = usersApi
     }
 
+    func userModelForId(_ id: UsersList.UserIdentifier) -> UserModel? {
+        return self.usersBehaviorRelay.value.first(where: { (model) -> Bool in
+            return model.identifier == id
+        })
+    }
+
     enum LoadUsersResult {
-        case success(Users)
+        case success([UserApiModel])
         case error(UsersListUsersFetcherProtocolError)
     }
     private func loadUsers(
@@ -36,18 +42,7 @@ class UsersListUsersFetcher {
                 switch result {
                 case .success(let usersModel):
                     self?.page = usersModel.info.page
-
-                    let users: Users = usersModel.results.map({ (model) -> User in
-                        let name = [model.name.first, model.name.last].joined(separator: " ")
-
-                        return User(
-                            name: name,
-                            phone: model.phone,
-                            id: model.identifier,
-                            imageUrl: URL(string: model.picture.thumbnail)
-                        )
-                    })
-                    completion(.success(users))
+                    completion(.success(usersModel.results))
                 case .error(let error):
                     let error = UsersListUsersFetcherProtocolError(title: nil, message: error.error)
                     completion(.error(error))
@@ -61,12 +56,21 @@ class UsersListUsersFetcher {
 
 extension UsersListUsersFetcher: UsersListUsersFetcherProtocol {
 
-    var users: Users { return self.usersBehaviorRelay.value }
+    var users: Users { return self.usersBehaviorRelay.value.users }
     var loadingStatus: LoadingStatus { return self.loadingStatusBehaviorRelay.value }
     var loadingMoreStatus: LoadingStatus { return self.loadingMoreStatusBehaviorRelay.value }
     var error: UsersListUsersFetcherProtocol.Error { return self.errorBehaviorRelay.value }
 
-    func observeUsers() -> Observable<Users> { return self.usersBehaviorRelay.asObservable() }
+    var canRefresh: Bool { return true }
+    var canLoadMore: Bool { return true }
+    var canRemoveUsers: Bool { return false }
+
+    func observeUsers() -> Observable<Users> {
+        return self.usersBehaviorRelay
+            .map({ (models) -> Users in
+                return models.users
+            })
+    }
     func observeLoadingStatus() -> Observable<LoadingStatus> { return self.loadingStatusBehaviorRelay.asObservable() }
     func observeLoadingMoreStatus() -> Observable<LoadingStatus> { return self.loadingMoreStatusBehaviorRelay.asObservable() }
     func observeError() -> Observable<UsersListUsersFetcherProtocol.Error> { return self.errorBehaviorRelay.asObservable() }
@@ -84,8 +88,8 @@ extension UsersListUsersFetcher: UsersListUsersFetcherProtocol {
             completion: { [weak self] (result) in
                 self?.loadingStatusBehaviorRelay.accept(.loaded)
                 switch result {
-                case .success(let users):
-                    self?.usersBehaviorRelay.accept(users)
+                case .success(let apiUsers):
+                    self?.usersBehaviorRelay.accept(apiUsers.users)
                 case .error(let error):
                     self?.errorBehaviorRelay.accept(error)
                 }
@@ -105,16 +109,69 @@ extension UsersListUsersFetcher: UsersListUsersFetcherProtocol {
             completion: { [weak self] (result) in
                 self?.loadingMoreStatusBehaviorRelay.accept(.loaded)
                 switch result {
-                case .success(let users):
-                    let newUsers = (self?.usersBehaviorRelay.value ?? []) + users
+                case .success(let apiUsers):
+                    let newUsers = (self?.usersBehaviorRelay.value ?? []) + apiUsers.users
                     self?.usersBehaviorRelay.accept(newUsers)
                 case .error(let error):
                     self?.errorBehaviorRelay.accept(error)
                 }
         })
     }
+
+    func removeUserForId(_ id: UsersList.UserIdentifier) { }
 }
 
 extension UsersList {
     typealias UsersFetcher = UsersListUsersFetcher
+}
+
+private extension UserApiModel {
+    var user: UserModel {
+        return UserModel(
+            name: UserModel.Name(
+                first: self.name.first,
+                last: self.name.last
+            ),
+            phone: self.phone,
+            email: self.email,
+            id: UserModel.Id(
+                name: self.id.name,
+                value: self.id.value
+            ),
+            picture: UserModel.Picture(
+                large: self.picture.large,
+                medium: self.picture.medium,
+                thumbnail: self.picture.thumbnail
+            )
+        )
+    }
+}
+
+private extension Array where Element == UserApiModel {
+    var users: [UserModel] {
+        return self.map({ (element) -> UserModel in
+            return element.user
+        })
+    }
+}
+
+private extension UserModel {
+    var user: UsersList.Model.User {
+        let name = [self.name.first, self.name.last].joined(separator: " ")
+
+        return UsersList.Model.User(
+            name: name,
+            phone: self.phone,
+            id: self.identifier,
+            imageUrl: URL(string: self.picture.thumbnail)
+        )
+    }
+}
+
+private extension Array where Element == UserModel {
+    var users: [UsersList.Model.User] {
+        return self.map({ (model) -> UsersList.Model.User in
+            return model.user
+        })
+    }
 }

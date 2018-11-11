@@ -5,9 +5,11 @@ protocol UsersListBusinessLogic {
     typealias Event = UsersList.Event
     
     func onViewDidLoad(request: Event.ViewDidLoad.Request)
+    func onViewDidLoadSync(request: Event.ViewDidLoadSync.Request)
     func onReloadUsers(request: Event.ReloadUsers.Request)
     func onLoadMoreUsers(request: Event.LoadMoreUsers.Request)
     func onDidSelectUser(request: Event.DidSelectUser.Request)
+    func onDidRemoveUser(request: Event.DidRemoveUser.Request)
 }
 
 extension UsersList {
@@ -125,16 +127,32 @@ extension UsersList.Interactor: UsersList.BusinessLogic {
         self.observeError()
     }
 
+    func onViewDidLoadSync(request: Event.ViewDidLoadSync.Request) {
+        let response = Event.ViewDidLoadSync.Response(
+            hasRefresh: self.usersFetcher.canRefresh,
+            hasLoadMore: self.usersFetcher.canLoadMore,
+            canRemoveUsers: self.usersFetcher.canRemoveUsers
+        )
+        self.presenter.presentViewDidLoadSync(response: response)
+    }
+
     func onReloadUsers(request: Event.ReloadUsers.Request) {
+        guard self.usersFetcher.canRefresh else { return }
         self.reloadUsers()
     }
 
     func onLoadMoreUsers(request: Event.LoadMoreUsers.Request) {
+        guard self.usersFetcher.canLoadMore else { return }
         self.loadMoreUsers()
     }
 
     func onDidSelectUser(request: Event.DidSelectUser.Request) {
         let response = request
         self.presenter.presentDidSelectUser(response: response)
+    }
+
+    func onDidRemoveUser(request: Event.DidRemoveUser.Request) {
+        guard self.usersFetcher.canRemoveUsers else { return }
+        self.usersFetcher.removeUserForId(request.id)
     }
 }

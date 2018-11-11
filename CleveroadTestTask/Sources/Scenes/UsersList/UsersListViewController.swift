@@ -4,7 +4,8 @@ import RxSwift
 
 protocol UsersListDisplayLogic: class {
     typealias Event = UsersList.Event
-    
+
+    func displayViewDidLoadSync(viewModel: Event.ViewDidLoadSync.ViewModel)
     func displayUsersDidChange(viewModel: Event.UsersDidChange.ViewModel)
     func displayLoadingStatusDidChage(viewModel: Event.LoadingStatusDidChange.ViewModel)
     func displayLoadingMoreStatusDidChage(viewModel: Event.LoadingMoreStatusDidChange.ViewModel)
@@ -29,6 +30,7 @@ extension UsersList {
 
         private var sections: [[UsersListTableViewCell.Model]] = []
         private var oldPanTranslation: CGFloat = 0
+        private var canRemoveUsers: Bool = false
         private let disposeBag: DisposeBag = DisposeBag()
 
         private let tableView: UITableView = UITableView(frame: .zero, style: .plain)
@@ -54,13 +56,16 @@ extension UsersList {
             self.interactorDispatch?.sendRequest { businessLogic in
                 businessLogic.onViewDidLoad(request: request)
             }
+
+            let requestSync = Event.ViewDidLoadSync.Request()
+            self.interactorDispatch?.sendSyncRequest(requestBlock: { (businessLogic) in
+                businessLogic.onViewDidLoadSync(request: requestSync)
+            })
         }
 
         // MARK: - Private methods
 
-        private func setupView() {
-            self.navigationItem.title = "Users"
-        }
+        private func setupView() { }
 
         private func setupRefreshControl() {
             self.refreshControl
@@ -88,9 +93,6 @@ extension UsersList {
 
         private func layoutViews() {
             self.view.addSubview(self.tableView)
-            self.tableView.refreshControl = self.refreshControl
-            self.tableView.tableFooterView = self.loadMoreActivityIndicator
-            self.tableView.tableFooterView?.isHidden = true
 
             self.tableView.snp.makeConstraints { (make) in
                 make.edges.equalToSuperview()
@@ -176,6 +178,21 @@ extension UsersList {
 }
 
 extension UsersList.ViewController: UsersList.DisplayLogic {
+    func displayViewDidLoadSync(viewModel: Event.ViewDidLoadSync.ViewModel) {
+        if viewModel.hasRefresh {
+            self.tableView.refreshControl = self.refreshControl
+        }
+
+        if viewModel.hasLoadMore {
+            self.tableView.tableFooterView = self.loadMoreActivityIndicator
+            self.tableView.tableFooterView?.isHidden = true
+        } else {
+            self.tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: 1, height: 0))
+        }
+
+        self.canRemoveUsers = viewModel.canRemoveUsers
+    }
+
     func displayUsersDidChange(viewModel: Event.UsersDidChange.ViewModel) {
         self.sections = [viewModel.cells]
         self.tableView.reloadData()
@@ -219,6 +236,27 @@ extension UsersList.ViewController: UITableViewDelegate {
             let request = Event.DidSelectUser.Request(id: model.id)
             businessLogic.onDidSelectUser(request: request)
         })
+    }
+
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        var actions: [UITableViewRowAction] = []
+
+        if self.canRemoveUsers {
+            actions.append(UITableViewRowAction(
+                style: .destructive,
+                title: "Remove",
+                handler: { [weak self] (action, indexPath) in
+                    if let model = self?.cellModelForIndexPath(indexPath) {
+                        let request = Event.DidRemoveUser.Request(id: model.id)
+                        self?.interactorDispatch?.sendRequest(requestBlock: { (businessLogic) in
+                            businessLogic.onDidRemoveUser(request: request)
+                        })
+                    }
+                }
+            ))
+        }
+
+        return actions
     }
 }
 

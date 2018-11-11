@@ -1,7 +1,7 @@
 import Foundation
 
 struct UsersModel: Decodable {
-    let results: [UserModel]
+    let results: [UserApiModel]
     let info: Info
 }
 

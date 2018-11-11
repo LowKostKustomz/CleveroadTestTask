@@ -1,32 +1,28 @@
 import Foundation
 
-struct UserModel: Decodable {
+struct UserApiModel: Decodable {
     let name: Name
     let phone: String
     let email: String
-    private let id: Id
+    let id: Id
     let picture: Picture
-
-    var identifier: String {
-        return [self.id.name, self.id.value ?? "", self.name.first, self.name.last, self.phone, self.email].joined()
-    }
 }
 
-extension UserModel {
+extension UserApiModel {
     struct Name: Decodable {
         let first: String
         let last: String
     }
 }
 
-extension UserModel {
+extension UserApiModel {
     struct Id: Decodable {
         let name: String
         let value: String?
     }
 }
 
-extension UserModel {
+extension UserApiModel {
     struct Picture: Decodable {
         let large: String
         let medium: String
