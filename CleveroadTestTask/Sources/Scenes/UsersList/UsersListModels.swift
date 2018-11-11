@@ -47,6 +47,7 @@ extension UsersList.Event {
         struct Response {
             let hasRefresh: Bool
             let hasLoadMore: Bool
+            let canRemoveUsers: Bool
         }
         typealias ViewModel = Response
     }
@@ -96,5 +97,11 @@ extension UsersList.Event {
         }
         typealias Response = Request
         typealias ViewModel = Request
+    }
+
+    enum DidRemoveUser {
+        struct Request {
+            let id: UsersList.UserIdentifier
+        }
     }
 }

@@ -43,6 +43,7 @@ extension UsersListSavedUsersFetcher: UsersListUsersFetcherProtocol {
 
     var canRefresh: Bool { return false }
     var canLoadMore: Bool { return false }
+    var canRemoveUsers: Bool { return true }
 
     func observeUsers() -> Observable<Users> {
         return self.usersBehaviorRelay
@@ -56,6 +57,12 @@ extension UsersListSavedUsersFetcher: UsersListUsersFetcherProtocol {
 
     func reloadUsers() { }
     func loadMoreUsers() { }
+
+    func removeUserForId(_ id: UsersList.UserIdentifier) {
+        if let user = self.userModelForId(id) {
+            self.usersStorage.update(save: [], remove: [user])
+        }
+    }
 }
 
 extension UsersList {

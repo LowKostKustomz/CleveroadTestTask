@@ -9,6 +9,7 @@ protocol UsersListBusinessLogic {
     func onReloadUsers(request: Event.ReloadUsers.Request)
     func onLoadMoreUsers(request: Event.LoadMoreUsers.Request)
     func onDidSelectUser(request: Event.DidSelectUser.Request)
+    func onDidRemoveUser(request: Event.DidRemoveUser.Request)
 }
 
 extension UsersList {
@@ -129,7 +130,8 @@ extension UsersList.Interactor: UsersList.BusinessLogic {
     func onViewDidLoadSync(request: Event.ViewDidLoadSync.Request) {
         let response = Event.ViewDidLoadSync.Response(
             hasRefresh: self.usersFetcher.canRefresh,
-            hasLoadMore: self.usersFetcher.canLoadMore
+            hasLoadMore: self.usersFetcher.canLoadMore,
+            canRemoveUsers: self.usersFetcher.canRemoveUsers
         )
         self.presenter.presentViewDidLoadSync(response: response)
     }
@@ -147,5 +149,10 @@ extension UsersList.Interactor: UsersList.BusinessLogic {
     func onDidSelectUser(request: Event.DidSelectUser.Request) {
         let response = request
         self.presenter.presentDidSelectUser(response: response)
+    }
+
+    func onDidRemoveUser(request: Event.DidRemoveUser.Request) {
+        guard self.usersFetcher.canRemoveUsers else { return }
+        self.usersFetcher.removeUserForId(request.id)
     }
 }

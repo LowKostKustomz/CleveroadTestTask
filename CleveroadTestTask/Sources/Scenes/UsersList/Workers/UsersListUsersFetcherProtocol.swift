@@ -24,6 +24,7 @@ protocol UsersListUsersFetcherProtocol {
 
     var canRefresh: Bool { get }
     var canLoadMore: Bool { get }
+    var canRemoveUsers: Bool { get }
 
     func observeUsers() -> Observable<Users>
     func observeLoadingStatus() -> Observable<LoadingStatus>
@@ -32,6 +33,8 @@ protocol UsersListUsersFetcherProtocol {
 
     func reloadUsers()
     func loadMoreUsers()
+
+    func removeUserForId(_ id: UsersList.UserIdentifier)
 }
 
 extension UsersList {

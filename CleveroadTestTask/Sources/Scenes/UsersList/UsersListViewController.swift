@@ -30,6 +30,7 @@ extension UsersList {
 
         private var sections: [[UsersListTableViewCell.Model]] = []
         private var oldPanTranslation: CGFloat = 0
+        private var canRemoveUsers: Bool = false
         private let disposeBag: DisposeBag = DisposeBag()
 
         private let tableView: UITableView = UITableView(frame: .zero, style: .plain)
@@ -188,6 +189,8 @@ extension UsersList.ViewController: UsersList.DisplayLogic {
         } else {
             self.tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: 1, height: 0))
         }
+
+        self.canRemoveUsers = viewModel.canRemoveUsers
     }
 
     func displayUsersDidChange(viewModel: Event.UsersDidChange.ViewModel) {
@@ -233,6 +236,27 @@ extension UsersList.ViewController: UITableViewDelegate {
             let request = Event.DidSelectUser.Request(id: model.id)
             businessLogic.onDidSelectUser(request: request)
         })
+    }
+
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        var actions: [UITableViewRowAction] = []
+
+        if self.canRemoveUsers {
+            actions.append(UITableViewRowAction(
+                style: .destructive,
+                title: "Remove",
+                handler: { [weak self] (action, indexPath) in
+                    if let model = self?.cellModelForIndexPath(indexPath) {
+                        let request = Event.DidRemoveUser.Request(id: model.id)
+                        self?.interactorDispatch?.sendRequest(requestBlock: { (businessLogic) in
+                            businessLogic.onDidRemoveUser(request: request)
+                        })
+                    }
+                }
+            ))
+        }
+
+        return actions
     }
 }
 
