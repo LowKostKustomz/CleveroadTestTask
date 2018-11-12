@@ -36,6 +36,7 @@ extension UsersList {
         private let tableView: UITableView = UITableView(frame: .zero, style: .plain)
         private let refreshControl: UIRefreshControl = UIRefreshControl(frame: .zero)
         private let loadMoreActivityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(style: .gray)
+        private let tableFooterView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 1, height: 0))
         
         func inject(interactorDispatch: InteractorDispatch?, routing: Routing?) {
             self.interactorDispatch = interactorDispatch
@@ -49,6 +50,7 @@ extension UsersList {
 
             self.setupView()
             self.setupRefreshControl()
+            self.setupLoadMoreActivityIndicator()
             self.setupTableView()
             self.layoutViews()
             
@@ -61,6 +63,12 @@ extension UsersList {
             self.interactorDispatch?.sendSyncRequest(requestBlock: { (businessLogic) in
                 businessLogic.onViewDidLoadSync(request: requestSync)
             })
+        }
+
+        override func viewWillAppear(_ animated: Bool) {
+            super.viewWillAppear(animated)
+
+            self.smoothlyDeselectRows()
         }
 
         // MARK: - Private methods
@@ -82,7 +90,7 @@ extension UsersList {
         }
 
         private func setupLoadMoreActivityIndicator() {
-            self.loadMoreActivityIndicator.hidesWhenStopped = false
+            self.loadMoreActivityIndicator.startAnimating()
         }
 
         private func setupTableView() {
@@ -97,6 +105,8 @@ extension UsersList {
             self.tableView.snp.makeConstraints { (make) in
                 make.edges.equalToSuperview()
             }
+
+            self.loadMoreActivityIndicator.frame.size.height = 32
         }
 
         // Helpers
@@ -166,13 +176,39 @@ extension UsersList {
         // Load more
 
         private func showLoadMoreIndicator() {
-            self.tableView.tableFooterView?.isHidden = false
-            self.loadMoreActivityIndicator.startAnimating()
+            self.tableView.tableFooterView = self.loadMoreActivityIndicator
         }
 
         private func hideLoadMoreIndicator() {
-            self.tableView.tableFooterView?.isHidden = true
-            self.loadMoreActivityIndicator.stopAnimating()
+            self.tableView.tableFooterView = self.tableFooterView
+        }
+
+        //
+
+        private func smoothlyDeselectRows() {
+            guard let selectedIndexPaths = self.tableView.indexPathsForSelectedRows
+                else {
+                    return
+            }
+
+            if let coordinator = transitionCoordinator {
+                coordinator.animate(alongsideTransition: { (context) in
+                    selectedIndexPaths.forEach { (indexPath) in
+                        self.tableView.deselectRow(at: indexPath, animated: context.isAnimated)
+                    }
+                }, completion: { (context) in
+                    if context.isCancelled {
+                        selectedIndexPaths.forEach { (indexPath) in
+                            self.tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
+                        }
+                    }
+                })
+            }
+            else {
+                selectedIndexPaths.forEach { (indexPath) in
+                    self.tableView.deselectRow(at: indexPath, animated: false)
+                }
+            }
         }
     }
 }
@@ -216,12 +252,7 @@ extension UsersList.ViewController: UsersList.DisplayLogic {
 
     func displayErrorDidChange(viewModel: Event.ErrorDidChange.ViewModel) {
         guard viewModel.message != nil || viewModel.title != nil else { return }
-
-        // TODO: - Change to my StatusAlert
-        let errorAlert = UIAlertController(title: viewModel.title ?? "Error", message: viewModel.message, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-        errorAlert.addAction(okAction)
-        self.present(errorAlert, animated: true, completion: nil)
+        self.routing?.onSimpleError(viewModel.title ?? "Error", viewModel.message)
     }
 
     func displayDidSelectUser(viewModel: Event.DidSelectUser.ViewModel) {
