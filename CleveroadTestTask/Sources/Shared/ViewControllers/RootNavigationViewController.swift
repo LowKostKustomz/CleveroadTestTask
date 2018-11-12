@@ -21,6 +21,8 @@ class RootNavigationViewController: UIViewController, RootNavigationProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.setupView()
+        self.setupContentView()
         self.layoutViews()
     }
 
@@ -52,6 +54,14 @@ class RootNavigationViewController: UIViewController, RootNavigationProtocol {
     }
 
     // MARK: - Private methods
+
+    private func setupView() {
+        self.view.backgroundColor = .white
+    }
+
+    private func setupContentView() {
+        self.contentContainer.backgroundColor = .clear
+    }
 
     private func layoutViews() {
         self.view.addSubview(self.contentContainer)

@@ -1,8 +1,8 @@
 import Foundation
 
-extension UsersList {
+extension EditUserProfile {
     struct Routing {
-        let onDidSelectUser: (_ id: UserIdentifier) -> Void
+        let onUserSaved: () -> Void
         let onSimpleError: (_ title: String?, _ message: String?) -> Void
     }
 }
